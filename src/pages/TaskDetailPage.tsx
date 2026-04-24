@@ -1,9 +1,15 @@
 import { Link, useParams } from 'react-router-dom';
-import useTasks from '../hooks/useTasks';
+import type { Task } from '../types/task';
 
-function TaskDetailPage() {
+interface TaskDetailPageProps {
+  tasks: Task[];
+}
+
+function TaskDetailPage({ tasks }: TaskDetailPageProps) {
   const { id } = useParams<{ id: string }>();
-  const { tasks } = useTasks();
+  console.log('URL id:', id);
+  console.log('All tasks:', tasks);
+  console.log('Found task:', tasks.find(t => t.id === id));
   const task = tasks.find((t) => t.id === id);
 
   if (!task) {
@@ -29,7 +35,7 @@ function TaskDetailPage() {
       </p>
       <p>{task.description}</p>
       <div className="task-detail__actions">
-        {/* Edit and Delete buttons — coming in Phase 3 and 4 */}
+        {/* Edit and Delete buttons in Phase 3 and 4 */}
       </div>
     </main>
   );
