@@ -5,10 +5,10 @@ import mockTasks from '../data/mockTasks';
 interface UseTasksReturn {
   tasks: Task[];
   addTask: (title: string, description: string) => void;
+  updateTask: (id: string, updates: { title: string; description: string }) => void;
 }
 
 function useTasks(): UseTasksReturn {
-  console.log('useTasks called'); 
   const [tasks, setTasks] = useState<Task[]>(mockTasks);
 
   function addTask(title: string, description: string) {
@@ -22,7 +22,13 @@ function useTasks(): UseTasksReturn {
     setTasks((prev) => [newTask, ...prev]);
   }
 
-  return { tasks, addTask };
+  function updateTask(id: string, updates: { title: string; description: string }) {
+    setTasks((prev) =>
+      prev.map((task) => (task.id === id ? { ...task, ...updates } : task))
+    );
+  }
+
+  return { tasks, addTask, updateTask };
 }
 
 export default useTasks;
