@@ -1,6 +1,8 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import type { Task } from '../types/task';
 import mockTasks from '../data/mockTasks';
+
+const STORAGE_KEY = 'tasks';
 
 interface UseTasksReturn {
   tasks: Task[];
@@ -10,7 +12,18 @@ interface UseTasksReturn {
 }
 
 function useTasks(): UseTasksReturn {
-  const [tasks, setTasks] = useState<Task[]>(mockTasks);
+  const [tasks, setTasks] = useState<Task[]>(() => {
+    try {
+      const stored = localStorage.getItem(STORAGE_KEY);
+      return stored ? JSON.parse(stored) : mockTasks;
+    } catch {
+      return mockTasks;
+    }
+  });
+
+  useEffect(() => {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks));
+  }, [tasks]);
 
   function addTask(title: string, description: string) {
     const newTask: Task = {
