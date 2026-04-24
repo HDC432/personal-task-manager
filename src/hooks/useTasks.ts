@@ -4,12 +4,25 @@ import mockTasks from '../data/mockTasks';
 
 interface UseTasksReturn {
   tasks: Task[];
+  addTask: (title: string, description: string) => void;
 }
 
 function useTasks(): UseTasksReturn {
-  const [tasks] = useState<Task[]>(mockTasks);
+  console.log('useTasks called'); 
+  const [tasks, setTasks] = useState<Task[]>(mockTasks);
 
-  return { tasks };
+  function addTask(title: string, description: string) {
+    const newTask: Task = {
+      id: crypto.randomUUID(),
+      title,
+      description,
+      status: 'pending',
+      createdAt: new Date().toISOString(),
+    };
+    setTasks((prev) => [newTask, ...prev]);
+  }
+
+  return { tasks, addTask };
 }
 
 export default useTasks;
