@@ -4,12 +4,12 @@ import TaskListPage from './pages/TaskListPage'
 import TaskDetailPage from './pages/TaskDetailPage'
 
 function App() {
-  const { tasks, addTask } = useTasks()
+  const { tasks, addTask, updateTask } = useTasks()
 
   return (
     <Routes>
       <Route path="/" element={<TaskListPage tasks={tasks} addTask={addTask} />} />
-      <Route path="/tasks/:id" element={<TaskDetailPage tasks={tasks} />} />
+      <Route path="/tasks/:id" element={<TaskDetailPage tasks={tasks} updateTask={updateTask} />} />
     </Routes>
   )
 }
