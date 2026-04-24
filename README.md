@@ -1,7 +1,9 @@
 # Personal Task Manager
 
 A simple personal task manager built with React + TypeScript. Supports creating, editing, and deleting tasks, with localStorage persistence so your tasks survive page reloads.
-**Live Demo**: https://personal-task-manager-lovat.vercel.app
+
+**🔗 Live Demo**: [personal-task-manager-lovat.vercel.app](https://personal-task-manager-lovat.vercel.app)
+
 ![Task list view](docs/screenshot.png)
 
 ## Features
@@ -36,9 +38,9 @@ npm install
 
 ### Run locally
 
-\`\`\`bash
+```bash
 npm run dev
-\`\`\`
+```
 
 Open [http://localhost:5173](http://localhost:5173) in your browser.
 
