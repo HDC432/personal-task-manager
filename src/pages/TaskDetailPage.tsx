@@ -1,14 +1,16 @@
 import { useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import type { Task } from '../types/task';
 
 interface TaskDetailPageProps {
   tasks: Task[];
   updateTask: (id: string, updates: { title: string; description: string }) => void;
+  deleteTask: (id: string) => void;
 }
 
-function TaskDetailPage({ tasks, updateTask }: TaskDetailPageProps) {
+function TaskDetailPage({ tasks, updateTask, deleteTask }: TaskDetailPageProps) {
   const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate();
   const task = tasks.find((t) => t.id === id);
 
   const [isEditing, setIsEditing] = useState(false);
@@ -39,6 +41,13 @@ function TaskDetailPage({ tasks, updateTask }: TaskDetailPageProps) {
 
   function handleCancel() {
     setIsEditing(false);
+  }
+
+  function handleDelete() {
+    if (window.confirm('Delete this task?')) {
+      deleteTask(task!.id);
+      navigate('/');
+    }
   }
 
   return (
@@ -90,7 +99,7 @@ function TaskDetailPage({ tasks, updateTask }: TaskDetailPageProps) {
           <p>{task.description}</p>
           <div className="task-detail__actions">
             <button className="btn-primary" onClick={handleEditClick}>Edit</button>
-            {/* Delete button — Phase 4 */}
+            <button className="btn-danger" onClick={handleDelete}>Delete</button>
           </div>
         </>
       )}
