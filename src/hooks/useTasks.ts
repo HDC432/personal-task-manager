@@ -6,6 +6,7 @@ interface UseTasksReturn {
   tasks: Task[];
   addTask: (title: string, description: string) => void;
   updateTask: (id: string, updates: { title: string; description: string }) => void;
+  deleteTask: (id: string) => void;
 }
 
 function useTasks(): UseTasksReturn {
@@ -28,7 +29,11 @@ function useTasks(): UseTasksReturn {
     );
   }
 
-  return { tasks, addTask, updateTask };
+  function deleteTask(id: string) {
+    setTasks((prev) => prev.filter((task) => task.id !== id));
+  }
+
+  return { tasks, addTask, updateTask, deleteTask };
 }
 
 export default useTasks;
